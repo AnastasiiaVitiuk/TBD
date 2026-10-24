@@ -1,0 +1,15 @@
+# Core Gemini & AI SDKs
+google-genai>=2.31.0
+
+# MongoDB Atlas & Vector Search
+pymongo>=4.9.0
+
+# Optional Voyage AI embeddings
+voyageai>=0.3.0
+
+# Web & API framework
+fastapi>=0.115.0
+uvicorn>=0.34.0
+pydantic>=2.10.0
+python-dotenv>=1.0.1
+requests>=2.32.0
