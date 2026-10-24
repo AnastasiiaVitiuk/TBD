@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "CliniBridge",
+    "slug": "clinibridge-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.clinibridge.mobile",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "CliniBridge needs microphone access to record your symptoms in your native language."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#005EB8"
+      },
+      "permissions": [
+        "RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}

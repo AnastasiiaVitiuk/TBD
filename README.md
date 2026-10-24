@@ -1,79 +1,69 @@
 # CliniBridge | NHS Multilingual Clinical Triage & SNOMED Grounding Mobile App
-> Encode London Hackathon 2026
+> Encode London Hackathon 2026 • React Native & Expo
 
-An AI-powered mobile app built for the UK National Health Service (NHS) that empowers patients struggling with language barriers to accurately convey their symptoms, undergo guided clinical triage in their native language, and ground their descriptions into official SNOMED CT terminology.
-
----
-
-## 🎯 The Problem & Our Solution
-
-- **The Problem:** Many patients in the UK speak English as a second language and struggle to describe acute and chronic symptoms to healthcare providers. Generic tools like Google Translate translate literal words but fail to capture clinical nuances, symptom chronologies, and red flags.
-- **Our Solution:** A guided conversational clinical interview that extracts structured clinical data, grounds lay phrasing in SNOMED CT concepts via MongoDB Atlas, and generates tailored Doctor and Patient views with built-in safety guardrails.
+An AI-powered mobile app built with **Expo (React Native)** for the UK National Health Service (NHS) that empowers patients struggling with language barriers to accurately convey their symptoms, undergo clinical triage in their native language, and ground their descriptions into official SNOMED CT terminology.
 
 ---
 
-## 🚀 Core Features (Per Hackathon Specification)
+## 📱 Two Accounts & Dual Role Experience
 
-1. **Step 1: Multilingual Voice Intake**
-   - Tap one button and speak in any language (Polish, Spanish, Ukrainian, Punjabi, Urdu, Arabic, Cantonese, Romanian, and more).
-   - Conversational triage nurse interview asking follow-up questions (Location, Timeline, Severity 1-10, Triggers, Associated Symptoms, Medications/Allergies).
-   - Verbatim audio capture and live speech transcription.
-   - Language selector with auto-detect and manual override.
+The app features two dedicated account experiences designed for the real clinical consultation visit:
 
-2. **Safety Guardrails & Red-Flag Interception**
-   - Instant detection of emergency red flags (cardiac arrest/acute coronary syndrome, respiratory distress, stroke FAST protocol, acute internal bleeding).
-   - Immediate high-priority bilingual alert instructing the patient to **Call 999** or go to the nearest A&E, with one-tap 999 dialing.
-   - Mandatory clinician review label: *"AI-generated clinical summary, to be checked by a clinician"*.
+1. **👤 Patient Account (Clean, Intuitive UI/UX)**
+   - **Language Selection**: Supports Polish, Spanish, Ukrainian, Punjabi, Urdu, Arabic, Romanian, Cantonese, Portuguese, Bengali, and English with native greetings.
+   - **1-Tap Voice Recording**: High-visibility microphone button (`expo-av`) with real-time recording timer and audio playback.
+   - **Emergency 999 Banner**: Real-time red flag interception for acute cardiac, respiratory, or stroke symptoms with 1-tap 999 dialing.
+   - **Send Voice & Translation**: Transmits the patient's native audio recording and clinically extracted English translation directly to the doctor's visit dashboard.
+   - **Doctor Follow-ups & Audio**: Receives follow-up questions from the clinician during the visit, simplified into plain language, translated into the patient's mother tongue, with a **🔊 Listen** button powered by `expo-speech`.
 
-3. **Step 2: Structured Clinical Extraction (Gemini 4-Argon / Flash)**
-   - Strict JSON Schema enforcing Chief Complaint, History of Present Illness (HPI), Symptoms list with severity (1-10), anatomical locations, character, onset, and duration.
-   - **Zero-hallucination constraint**: unstated medications and allergies are strictly marked as `"Not reported"`.
-   - Ambiguities and clarification flags highlighted for the clinician.
-
-4. **Step 3: Lay-to-Clinical Grounding with MongoDB Atlas & SNOMED CT**
-   - Maps patient lay expressions (e.g. *"burning in stomach after eating"*, *"pieczenie w żołądku"*) into canonical SNOMED CT concept IDs (e.g. `25376007` Dyspepsia / Epigastric pain).
-   - Prepared for MongoDB Atlas Vector Search + Hybrid search index.
-
-5. **Step 4: Dual Outputs & Confirm-Back Step**
-   - **Patient View:** Side-by-side table: *What you said* → *Official SNOMED clinical term* → *Plain language explanation in your native language*.
-   - **Doctor View (English):** Standardised NHS SBAR clinical summary, audio playback, verbatim transcript, and one-click export to Electronic Patient Records (EPR).
-   - **Confirm-Back Step:** Spoken audio readout in patient's native tongue (*"Did we get this right?"*) to verify accuracy before clinical review.
-
-6. **Step 5: Doctor Follow-up Mode**
-   - Doctor types/records follow-up questions in medical jargon.
-   - Translates into plain English and the patient's native tongue.
-   - Generates smart prompts for the patient (*"What you might want to ask your doctor"*).
+2. **🩺 Doctor Account (Clinical Software Integration)**
+   - **Active Visit Dashboard**: Live patient demographics (Name, NHS ID, primary language, time).
+   - **Voice Intake Audio Player**: Clinician listens directly to the patient's authentic recorded voice intake.
+   - **Bilingual Verbatim & Translation**: Patient's original words side-by-side with verified clinical English translation.
+   - **SNOMED CT & ICD-10 Grounding**: Exact mapping of lay terms to NHS TRUD clinical concepts with confidence scores.
+   - **Structured SBAR Summary**: Chief complaint, history of present illness (HPI), symptom breakdown (onset, duration, severity, location), medications, allergies, and ambiguities.
+   - **Interactive Follow-up Dispatcher**: Doctor can select 1-click clinical presets or type clinical questions; AI simplifies medical jargon and translates directly into the patient's language on their phone.
 
 ---
 
-## 🛠️ Tech Stack & Tools
+## 🛠️ Tech Stack
 
-- **Frontend:** React 19, Vite, Tailwind CSS, Lucide Icons, Web Speech API, Web Audio API, Mobile Phone Frame Simulator
+- **Mobile Framework:** React Native 0.88 & Expo SDK 58
+- **Audio & Speech:** `expo-av` (native recording & playback) & `expo-speech` (multilingual TTS)
+- **Icons:** `@expo/vector-icons` (Ionicons)
+- **Clinical Engine & Grounding:** Local NHS TRUD SNOMED CT Catalog + MongoDB Atlas Vector Search
+- **AI Models:** Google Gemini 3.8 Live / Gemini 4-Argon / Flash via `@google/genai` (with deterministic clinical fallback engine)
 - **Backend API:** Express.js, TypeScript (`tsx`)
-- **AI Models:** Google Gemini 3.8 Live / Gemini 4-Argon / Gemini Flash via `@google/genai`
-- **Database & Search:** MongoDB Atlas (`clinical_concepts`, `consultations`, Atlas Vector Search)
 
 ---
 
-## ⚙️ Setup & Running
+## 🚀 Running the App with Expo
 
-### 1. Configure Environment Variables
-Copy `.env.example` to `.env` and supply your API keys:
+You can run and test the app right away without installing anything to your machine globally:
+
+### 1. Start the Expo App
 ```bash
-cp .env.example .env
+npx expo start
 ```
-Add:
-```env
-GEMINI_API_KEY=your_google_gemini_api_key
-MONGODB_URI=your_mongodb_atlas_connection_string
-PORT=5001
+From the interactive terminal:
+- Press **`i`** to open in the **iOS Simulator**
+- Press **`a`** to open in the **Android Simulator**
+- Press **`w`** to open in the **Web Browser**
+
+### 2. (Optional) Run the Backend Server
+```bash
+npm run server
 ```
-
-*(Note: CliniBridge also includes a robust local fallback engine so you can test all features and workflows immediately even before plugging in cloud keys!)*
-
-### 2. Start the Development Server
+Or run both concurrently:
 ```bash
 npm run dev
 ```
-- App UI: `http://localhost:3000`
-- API Backend: `http://localhost:5001`
+
+### 3. Testing the Flow in Simulator
+1. In the top bar, select **Patient App**.
+2. Pick a language (e.g., 🇵🇱 Polski) and tap the microphone to record your voice or select a symptom chip.
+3. Tap **"Send Voice & Translation to Doctor"**.
+4. In the top bar, switch to **Doctor Software**.
+5. Listen to the patient's voice intake, review the English translation and SNOMED CT codes.
+6. Select or type a follow-up question and tap **"Translate & Send to Patient App"**.
+7. Switch back to **Patient App** and open tab **"3. Follow-ups"** to see and listen to the doctor's translated question!
